@@ -1,8 +1,34 @@
 export const pricingData = {
   cursor: {
-    pro: {
-      pricePerSeat: 20,
-      target: "individual developers",
-    },
+    Hobby: 0,
+    Pro: 20,
+    Business: 40,
+    Enterprise: 60,
+  },
+
+  chatgpt: {
+    Plus: 20,
+    Team: 30,
+    Enterprise: 60,
+  },
+
+  claude: {
+    Free: 0,
+    Pro: 20,
+    Max: 100,
+    Team: 30,
+    Enterprise: 60,
+  },
+
+  copilot: {
+    Individual: 10,
+    Business: 19,
+    Enterprise: 39,
+  },
+
+  gemini: {
+    Pro: 20,
+    Ultra: 25,
+    API: 0,
   },
 };
