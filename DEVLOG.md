@@ -55,3 +55,37 @@
 - Create recommendation rules for AI tool optimization
 - Generate dynamic audit results pages
 - Start implementing the overall savings summary section
+
+## Day 3 — 2026-05-08
+
+**Hours worked:** 7
+
+**What I did:**
+
+- Built the core audit engine for generating AI spend optimization recommendations
+- Implemented rule-based recommendation logic for Cursor, ChatGPT, and Claude plans
+- Added monthly and yearly savings calculations
+- Created centralized audit processing utilities
+- Introduced Zustand for lightweight audit state management
+- Connected the audit form workflow to the recommendation engine
+- Built a dynamic results page displaying optimization opportunities and savings breakdowns
+- Improved results UI hierarchy and readability for clearer presentation
+- Tested multiple spend scenarios to validate recommendation behavior
+
+**What I learned:**
+
+- Separating recommendation rules from the main audit engine made the logic easier to scale and debug
+- Lightweight global state management simplified passing audit results between pages
+- Financial recommendation systems require clearer reasoning than typical frontend applications because recommendations need to feel defensible
+
+**Blockers / what I'm stuck on:**
+
+- Recommendation rules are still relatively simple and need more nuanced decision-making for mixed usage patterns
+- Need to decide how aggressively the app should recommend vendor switching versus plan downgrades
+
+**Plan for tomorrow:**
+
+- Add AI-generated personalized summaries using Gemini
+- Implement backend storage with Supabase
+- Create audit persistence and shareable result URLs
+- Start lead capture workflow and transactional email setup
