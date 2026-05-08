@@ -1,10 +1,16 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { v4 as uuidv4 } from "uuid";
 
 import { ToolCard } from "@/components/tool-card";
+
 import { AuditFormData, ToolEntry } from "@/types/audit";
+
+import { runAudit } from "@/lib/audit-engine/runAudit";
+
+import { useAuditStore } from "@/store/audit-store";
 
 const defaultTool: ToolEntry = {
   id: uuidv4(),
@@ -15,6 +21,10 @@ const defaultTool: ToolEntry = {
 };
 
 export default function AuditPage() {
+  const router = useRouter();
+
+  const setResult = useAuditStore((state) => state.setResult);
+
   const [formData, setFormData] = useState<AuditFormData>({
     teamSize: 1,
     useCase: "coding",
@@ -40,8 +50,14 @@ export default function AuditPage() {
   ) => {
     setFormData((prev) => ({
       ...prev,
+
       tools: prev.tools.map((tool) =>
-        tool.id === id ? { ...tool, [field]: value } : tool,
+        tool.id === id
+          ? {
+              ...tool,
+              [field]: value,
+            }
+          : tool,
       ),
     }));
   };
@@ -49,6 +65,7 @@ export default function AuditPage() {
   const addTool = () => {
     setFormData((prev) => ({
       ...prev,
+
       tools: [
         ...prev.tools,
         {
@@ -65,8 +82,17 @@ export default function AuditPage() {
   const removeTool = (id: string) => {
     setFormData((prev) => ({
       ...prev,
+
       tools: prev.tools.filter((tool) => tool.id !== id),
     }));
+  };
+
+  const generateAudit = () => {
+    const result = runAudit(formData);
+
+    setResult(result);
+
+    router.push("/results/demo");
   };
 
   return (
@@ -80,7 +106,7 @@ export default function AuditPage() {
           </p>
         </div>
 
-        <div className="border rounded-2xl p-6 space-y-6">
+        <div className="border rounded-2xl p-6 space-y-6 bg-white">
           <div>
             <label className="block mb-2 font-medium">Team Size</label>
 
@@ -91,6 +117,7 @@ export default function AuditPage() {
               onChange={(e) =>
                 setFormData({
                   ...formData,
+
                   teamSize: Number(e.target.value),
                 })
               }
@@ -106,14 +133,19 @@ export default function AuditPage() {
               onChange={(e) =>
                 setFormData({
                   ...formData,
+
                   useCase: e.target.value as any,
                 })
               }
             >
               <option value="coding">Coding</option>
+
               <option value="writing">Writing</option>
+
               <option value="research">Research</option>
+
               <option value="data">Data</option>
+
               <option value="mixed">Mixed</option>
             </select>
           </div>
@@ -130,11 +162,17 @@ export default function AuditPage() {
           ))}
         </div>
 
-        <button onClick={addTool} className="border px-6 py-3 rounded-xl">
+        <button
+          onClick={addTool}
+          className="border px-6 py-3 rounded-xl bg-white"
+        >
           Add Tool
         </button>
 
-        <button className="w-full bg-black text-white py-4 rounded-xl font-semibold">
+        <button
+          onClick={generateAudit}
+          className="w-full bg-black text-white py-4 rounded-xl font-semibold"
+        >
           Generate Audit
         </button>
       </div>
