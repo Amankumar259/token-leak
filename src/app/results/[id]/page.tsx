@@ -1,14 +1,53 @@
 "use client";
 
-import { useAuditStore } from "@/store/audit-store";
+import { useEffect, useState } from "react";
 
-export default function ResultsPage() {
-  const result = useAuditStore((state) => state.result);
+interface AuditData {
+  result: any;
+  ai_summary: string;
+}
 
-  if (!result) {
+export default function ResultsPage({
+  params,
+}: {
+  params: {
+    id: string;
+  };
+}) {
+  const [audit, setAudit] = useState<AuditData | null>(null);
+
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function fetchAudit() {
+      try {
+        const response = await fetch(`/api/audits/${params.id}`);
+
+        const data = await response.json();
+
+        setAudit(data);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchAudit();
+  }, [params.id]);
+
+  if (loading) {
     return (
       <main className="min-h-screen flex items-center justify-center">
-        <p>No audit data found.</p>
+        <p>Loading audit...</p>
+      </main>
+    );
+  }
+
+  if (!audit) {
+    return (
+      <main className="min-h-screen flex items-center justify-center">
+        <p>Audit not found.</p>
       </main>
     );
   }
@@ -20,7 +59,7 @@ export default function ResultsPage() {
           <h1 className="text-5xl font-bold">Monthly Savings</h1>
 
           <p className="text-6xl font-bold mt-4">
-            ${result.totalMonthlySavings.toFixed(0)}
+            ${audit.result.totalMonthlySavings.toFixed(0)}
           </p>
 
           <p className="text-muted-foreground mt-2">
@@ -28,8 +67,14 @@ export default function ResultsPage() {
           </p>
         </div>
 
+        <div className="border rounded-2xl p-6 bg-white">
+          <h2 className="text-2xl font-semibold mb-4">AI Summary</h2>
+
+          <p className="text-muted-foreground leading-7">{audit.ai_summary}</p>
+        </div>
+
         <div className="grid gap-6">
-          {result.recommendations.map((rec, index) => (
+          {audit.result.recommendations.map((rec: any, index: number) => (
             <div key={index} className="border rounded-2xl p-6 bg-white">
               <div className="flex justify-between items-start">
                 <div className="space-y-2">
