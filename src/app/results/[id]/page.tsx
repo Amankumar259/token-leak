@@ -1,48 +1,25 @@
-"use client";
-
-import { useEffect, useState } from "react";
-
-interface AuditData {
-  result: any;
-  ai_summary: string;
+interface ResultsPageProps {
+  params: Promise<{
+    id: string;
+  }>;
 }
 
-export default function ResultsPage({
-  params,
-}: {
-  params: {
-    id: string;
-  };
-}) {
-  const [audit, setAudit] = useState<AuditData | null>(null);
+async function getAudit(id: string) {
+  const response = await fetch(`http://localhost:3000/api/audits/${id}`, {
+    cache: "no-store",
+  });
 
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    async function fetchAudit() {
-      try {
-        const response = await fetch(`/api/audits/${params.id}`);
-
-        const data = await response.json();
-
-        setAudit(data);
-      } catch (error) {
-        console.error(error);
-      } finally {
-        setLoading(false);
-      }
-    }
-
-    fetchAudit();
-  }, [params.id]);
-
-  if (loading) {
-    return (
-      <main className="min-h-screen flex items-center justify-center">
-        <p>Loading audit...</p>
-      </main>
-    );
+  if (!response.ok) {
+    return null;
   }
+
+  return response.json();
+}
+
+export default async function ResultsPage({ params }: ResultsPageProps) {
+  const { id } = await params;
+
+  const audit = await getAudit(id);
 
   if (!audit) {
     return (

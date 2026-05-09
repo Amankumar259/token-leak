@@ -2,16 +2,15 @@ import { NextResponse } from "next/server";
 
 import { supabaseServer } from "@/lib/db/server";
 
-export async function GET(
-  request: Request,
-  context: {
-    params: {
-      id: string;
-    };
-  },
-) {
+interface RouteContext {
+  params: Promise<{
+    id: string;
+  }>;
+}
+
+export async function GET(request: Request, context: RouteContext) {
   try {
-    const { id } = context.params;
+    const { id } = await context.params;
 
     const { data, error } = await supabaseServer
       .from("audits")
