@@ -87,12 +87,26 @@ export default function AuditPage() {
     }));
   };
 
-  const generateAudit = () => {
-    const result = runAudit(formData);
+  const generateAudit = async () => {
+    try {
+      const response = await fetch("/api/audits", {
+        method: "POST",
 
-    setResult(result);
+        headers: {
+          "Content-Type": "application/json",
+        },
 
-    router.push("/results/demo");
+        body: JSON.stringify(formData),
+      });
+
+      const data = await response.json();
+
+      setResult(data.result);
+
+      router.push(`/results/${data.id}`);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
