@@ -89,3 +89,38 @@
 - Implement backend storage with Supabase
 - Create audit persistence and shareable result URLs
 - Start lead capture workflow and transactional email setup
+
+## Day 4 — 2026-05-09
+
+**Hours worked:** 8
+
+**What I did:**
+
+- Integrated Gemini AI summaries into the audit workflow
+- Built backend API routes for creating and retrieving audits
+- Added Supabase database persistence for audit reports
+- Implemented server-side audit storage architecture
+- Created dynamic shareable result pages backed by database data
+- Added AI-generated personalized optimization summaries
+- Implemented graceful fallback handling for AI failures
+- Connected frontend audit flow to backend APIs
+- Tested persistent audit retrieval across page refreshes
+- Improved overall application flow from prototype to persistent SaaS-style architecture
+
+**What I learned:**
+
+- Separating frontend state from persistent backend storage significantly improves reliability and scalability
+- AI-generated summaries work best when fed structured deterministic data instead of raw user input
+- API route architecture in Next.js becomes much cleaner when business logic is isolated into reusable utility functions
+
+**Blockers / what I'm stuck on:**
+
+- Need stronger validation and abuse protection before public deployment
+- Shareable URLs currently expose all audit details publicly and need selective sanitization for production use
+
+**Plan for tomorrow:**
+
+- Build lead capture workflow and email confirmation system
+- Add transactional emails with Resend
+- Improve audit recommendation sophistication
+- Start accessibility and Lighthouse optimization work
