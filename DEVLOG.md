@@ -124,3 +124,38 @@
 - Add transactional emails with Resend
 - Improve audit recommendation sophistication
 - Start accessibility and Lighthouse optimization work
+
+## Day 5 — 2026-05-10
+
+**Hours worked:** 8
+
+**What I did:**
+
+- Built a lead capture workflow integrated into audit results
+- Added Supabase lead storage for email collection and audit tracking
+- Integrated transactional email delivery using Resend
+- Implemented confirmation emails for completed audits
+- Added honeypot-based abuse protection for lead submissions
+- Improved loading states and overall UX responsiveness
+- Expanded recommendation engine logic with more nuanced optimization rules
+- Connected lead capture directly into the audit conversion flow
+- Tested database persistence, email delivery, and public result sharing workflows
+- Improved production-readiness and overall application polish
+
+**What I learned:**
+
+- Transactional email systems are relatively simple technically but require careful handling of async flows and failure states
+- Small UX improvements like loading states dramatically improve perceived product quality
+- Recommendation systems become more believable when optimization logic considers team size and usage context instead of only pricing
+
+**Blockers / what I'm stuck on:**
+
+- Need stronger validation and rate limiting before exposing the app publicly
+- Still need to improve mobile responsiveness and accessibility scoring
+
+**Plan for tomorrow:**
+
+- Add automated tests for the audit engine
+- Configure GitHub Actions CI workflow
+- Improve Lighthouse performance and accessibility
+- Begin writing GTM, economics, and reflection documentation
