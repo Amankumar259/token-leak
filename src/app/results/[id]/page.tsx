@@ -9,20 +9,27 @@ async function getAudit(id: string) {
     const protocol = process.env.NODE_ENV === "production" ? "https" : "http";
     const host = process.env.VERCEL_URL || "localhost:3000";
     const baseUrl = `${protocol}://${host}`;
+    const url = `${baseUrl}/api/audits/${id}`;
 
-    const response = await fetch(`${baseUrl}/api/audits/${id}`, {
+    console.log(`[getAudit] Fetching from: ${url}`);
+
+    const response = await fetch(url, {
       cache: "no-store",
     });
 
+    console.log(`[getAudit] Response status: ${response.status}`);
+
     if (!response.ok) {
-      console.error(`API returned status ${response.status} for audit ${id}`);
+      const errorText = await response.text();
+      console.error(`[getAudit] API error (${response.status}): ${errorText}`);
       return null;
     }
 
     const data = await response.json();
+    console.log(`[getAudit] Received data:`, JSON.stringify(data, null, 2));
     return data;
   } catch (error) {
-    console.error("Error fetching audit:", error);
+    console.error("[getAudit] Error fetching audit:", error);
     return null;
   }
 }

@@ -14,7 +14,7 @@ export async function GET(request: Request, context: RouteContext) {
   try {
     const { id } = await context.params;
 
-    console.log(`Fetching audit with id: ${id}`);
+    console.log(`[API] Fetching audit with id: ${id}`);
 
     const { data, error } = await supabaseServer
       .from("audits")
@@ -23,12 +23,18 @@ export async function GET(request: Request, context: RouteContext) {
       .single();
 
     if (error) {
-      console.error("Supabase error:", error);
-      throw error;
+      console.error("[API] Supabase error:", error);
+      return NextResponse.json(
+        {
+          error: "Database error",
+          details: error.message,
+        },
+        { status: 500 },
+      );
     }
 
     if (!data) {
-      console.warn(`No audit found for id: ${id}`);
+      console.warn(`[API] No audit found for id: ${id}`);
       return NextResponse.json(
         {
           error: "Audit not found",
@@ -37,15 +43,17 @@ export async function GET(request: Request, context: RouteContext) {
       );
     }
 
+    console.log(`[API] Found audit:`, JSON.stringify(data, null, 2));
     return NextResponse.json(data);
   } catch (error) {
-    console.error("Error in GET /api/audits/[id]:", error);
+    console.error("[API] Error in GET /api/audits/[id]:", error);
 
     return NextResponse.json(
       {
-        error: "Audit not found",
+        error: "Internal server error",
+        message: error instanceof Error ? error.message : "Unknown error",
       },
-      { status: 404 },
+      { status: 500 },
     );
   }
 }
