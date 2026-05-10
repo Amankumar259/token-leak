@@ -10,6 +10,8 @@ export async function POST(request: Request) {
   try {
     const body = await request.json();
 
+    console.log("Lead Request:", body);
+
     const { data, error } = await supabaseServer
       .from("leads")
       .insert({
@@ -22,6 +24,8 @@ export async function POST(request: Request) {
       .single();
 
     if (error) {
+      console.error("Supabase Error:", error);
+
       throw error;
     }
 
@@ -29,7 +33,7 @@ export async function POST(request: Request) {
 
     return NextResponse.json(data);
   } catch (error) {
-    console.error(error);
+    console.error("Lead API Error:", error);
 
     return NextResponse.json(
       {

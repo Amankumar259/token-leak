@@ -3,7 +3,7 @@ import { resend } from "./resend";
 export async function sendAuditEmail(email: string, savings: number) {
   try {
     await resend.emails.send({
-      from: "TokenLeak <onboarding@resend.dev>",
+      from: "onboarding@resend.dev",
 
       to: email,
 
