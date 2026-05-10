@@ -1,14 +1,14 @@
 "use client";
 
 import { useEffect, useState } from "react";
+
 import { useRouter } from "next/navigation";
+
 import { v4 as uuidv4 } from "uuid";
 
 import { ToolCard } from "@/components/tool-card";
 
 import { AuditFormData, ToolEntry } from "@/types/audit";
-
-import { runAudit } from "@/lib/audit-engine/runAudit";
 
 import { useAuditStore } from "@/store/audit-store";
 
@@ -24,6 +24,8 @@ export default function AuditPage() {
   const router = useRouter();
 
   const setResult = useAuditStore((state) => state.setResult);
+
+  const [loading, setLoading] = useState(false);
 
   const [formData, setFormData] = useState<AuditFormData>({
     teamSize: 1,
@@ -89,6 +91,8 @@ export default function AuditPage() {
 
   const generateAudit = async () => {
     try {
+      setLoading(true);
+
       const response = await fetch("/api/audits", {
         method: "POST",
 
@@ -106,6 +110,8 @@ export default function AuditPage() {
       router.push(`/results/${data.id}`);
     } catch (error) {
       console.error(error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -185,9 +191,10 @@ export default function AuditPage() {
 
         <button
           onClick={generateAudit}
-          className="w-full bg-black text-white py-4 rounded-xl font-semibold"
+          disabled={loading}
+          className="w-full bg-black text-white py-4 rounded-xl font-semibold disabled:opacity-50"
         >
-          Generate Audit
+          {loading ? "Generating Audit..." : "Generate Audit"}
         </button>
       </div>
     </main>
