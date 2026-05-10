@@ -6,15 +6,21 @@ interface ResultsPageProps {
 
 async function getAudit(id: string) {
   try {
-    const response = await fetch(`/api/audits/${id}`, {
+    const protocol = process.env.NODE_ENV === "production" ? "https" : "http";
+    const host = process.env.VERCEL_URL || "localhost:3000";
+    const baseUrl = `${protocol}://${host}`;
+
+    const response = await fetch(`${baseUrl}/api/audits/${id}`, {
       cache: "no-store",
     });
 
     if (!response.ok) {
+      console.error(`API returned status ${response.status} for audit ${id}`);
       return null;
     }
 
-    return response.json();
+    const data = await response.json();
+    return data;
   } catch (error) {
     console.error("Error fetching audit:", error);
     return null;

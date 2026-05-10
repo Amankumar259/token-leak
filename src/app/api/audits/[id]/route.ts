@@ -14,6 +14,8 @@ export async function GET(request: Request, context: RouteContext) {
   try {
     const { id } = await context.params;
 
+    console.log(`Fetching audit with id: ${id}`);
+
     const { data, error } = await supabaseServer
       .from("audits")
       .select("*")
@@ -21,12 +23,23 @@ export async function GET(request: Request, context: RouteContext) {
       .single();
 
     if (error) {
+      console.error("Supabase error:", error);
       throw error;
+    }
+
+    if (!data) {
+      console.warn(`No audit found for id: ${id}`);
+      return NextResponse.json(
+        {
+          error: "Audit not found",
+        },
+        { status: 404 },
+      );
     }
 
     return NextResponse.json(data);
   } catch (error) {
-    console.error(error);
+    console.error("Error in GET /api/audits/[id]:", error);
 
     return NextResponse.json(
       {
