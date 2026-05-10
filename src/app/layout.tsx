@@ -6,6 +6,9 @@ import { Navbar } from "@/components/navbar";
 export const metadata: Metadata = {
   title: "SpendPilot",
   description: "AI Spend Audit Tool",
+  icons: {
+    icon: "/favicon.ico",
+  },
 };
 
 export default function RootLayout({

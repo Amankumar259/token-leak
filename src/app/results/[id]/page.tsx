@@ -5,15 +5,20 @@ interface ResultsPageProps {
 }
 
 async function getAudit(id: string) {
-  const response = await fetch(`http://localhost:3000/api/audits/${id}`, {
-    cache: "no-store",
-  });
+  try {
+    const response = await fetch(`/api/audits/${id}`, {
+      cache: "no-store",
+    });
 
-  if (!response.ok) {
+    if (!response.ok) {
+      return null;
+    }
+
+    return response.json();
+  } catch (error) {
+    console.error("Error fetching audit:", error);
     return null;
   }
-
-  return response.json();
 }
 
 export default async function ResultsPage({ params }: ResultsPageProps) {
