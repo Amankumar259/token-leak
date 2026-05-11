@@ -4,6 +4,7 @@ import { useState } from "react";
 
 interface LeadFormProps {
   auditId: string;
+
   savings: number;
 }
 
@@ -60,11 +61,12 @@ export function LeadForm({ auditId, savings }: LeadFormProps) {
 
   if (success) {
     return (
-      <div className="border rounded-2xl p-6 bg-white">
-        <h2 className="text-2xl font-semibold">Audit Saved</h2>
+      <div className="glass-card rounded-3xl p-8">
+        <h2 className="text-3xl font-bold">Audit Saved</h2>
 
-        <p className="text-muted-foreground mt-2">
-          A confirmation email has been sent.
+        <p className="mt-4 text-gray-600 leading-7">
+          Your audit report has been successfully saved and a confirmation email
+          has been sent to your inbox.
         </p>
       </div>
     );
@@ -73,13 +75,14 @@ export function LeadForm({ auditId, savings }: LeadFormProps) {
   return (
     <form
       onSubmit={handleSubmit}
-      className="border rounded-2xl p-6 bg-white space-y-4"
+      className="glass-card rounded-3xl p-8 space-y-5"
     >
-      <div>
-        <h2 className="text-2xl font-semibold">Save Your Report</h2>
+      <div className="space-y-2">
+        <h2 className="text-3xl font-bold">Save Your Report</h2>
 
-        <p className="text-muted-foreground mt-2">
-          Get your audit delivered by email.
+        <p className="text-gray-600 leading-7">
+          Get your audit delivered by email and keep access to your optimization
+          report anytime.
         </p>
       </div>
 
@@ -95,8 +98,8 @@ export function LeadForm({ auditId, savings }: LeadFormProps) {
       <input
         type="email"
         required
-        placeholder="Email"
-        className="w-full border rounded-lg p-3"
+        placeholder="Email Address"
+        className="w-full rounded-xl border border-gray-200 bg-white/70 p-4 outline-none focus:ring-2 focus:ring-indigo-500"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
       />
@@ -104,24 +107,24 @@ export function LeadForm({ auditId, savings }: LeadFormProps) {
       <input
         type="text"
         placeholder="Company Name"
-        className="w-full border rounded-lg p-3"
+        className="w-full rounded-xl border border-gray-200 bg-white/70 p-4 outline-none focus:ring-2 focus:ring-indigo-500"
         value={companyName}
         onChange={(e) => setCompanyName(e.target.value)}
       />
 
       <input
         type="text"
-        placeholder="Role"
-        className="w-full border rounded-lg p-3"
+        placeholder="Your Role"
+        className="w-full rounded-xl border border-gray-200 bg-white/70 p-4 outline-none focus:ring-2 focus:ring-indigo-500"
         value={role}
         onChange={(e) => setRole(e.target.value)}
       />
 
       <button
         disabled={loading}
-        className="w-full bg-black text-white py-3 rounded-xl"
+        className="primary-button w-full rounded-2xl bg-black py-4 font-semibold text-white disabled:opacity-50"
       >
-        {loading ? "Saving..." : "Save Report"}
+        {loading ? "Saving Report..." : "Save Report"}
       </button>
     </form>
   );
