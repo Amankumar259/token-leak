@@ -14,27 +14,27 @@ interface ToolCardProps {
 
 export function ToolCard({ tool, onChange, onRemove }: ToolCardProps) {
   return (
-    <div className="border rounded-2xl p-6 space-y-4">
+    <div className="glass-card rounded-3xl p-6 space-y-6">
       <div className="flex justify-between items-center">
         <h2 className="font-semibold text-lg">Tool Configuration</h2>
 
         <button
           onClick={() => onRemove(tool.id)}
-          className="text-red-500 text-sm"
+          className="text-red-500 hover:text-red-700 transition"
         >
           Remove
         </button>
       </div>
 
       <input
-        className="w-full border rounded-lg p-2"
+        className="w-full rounded-xl border border-gray-200 bg-white/70 p-4 outline-none focus:ring-2 focus:ring-indigo-500"
         placeholder="Tool Name"
         value={tool.tool}
         onChange={(e) => onChange(tool.id, "tool", e.target.value)}
       />
 
       <input
-        className="w-full border rounded-lg p-2"
+        className="w-full rounded-xl border border-gray-200 bg-white/70 p-4 outline-none focus:ring-2 focus:ring-indigo-500"
         placeholder="Plan"
         value={tool.plan}
         onChange={(e) => onChange(tool.id, "plan", e.target.value)}
@@ -42,7 +42,7 @@ export function ToolCard({ tool, onChange, onRemove }: ToolCardProps) {
 
       <input
         type="number"
-        className="w-full border rounded-lg p-2"
+        className="w-full rounded-xl border border-gray-200 bg-white/70 p-4 outline-none focus:ring-2 focus:ring-indigo-500"
         placeholder="Monthly Spend"
         value={tool.monthlySpend}
         onChange={(e) =>
@@ -52,7 +52,7 @@ export function ToolCard({ tool, onChange, onRemove }: ToolCardProps) {
 
       <input
         type="number"
-        className="w-full border rounded-lg p-2"
+        className="w-full rounded-xl border border-gray-200 bg-white/70 p-4 outline-none focus:ring-2 focus:ring-indigo-500"
         placeholder="Seats"
         value={tool.seats}
         onChange={(e) => onChange(tool.id, "seats", Number(e.target.value))}
