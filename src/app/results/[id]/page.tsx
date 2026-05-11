@@ -28,24 +28,32 @@ export default async function ResultsPage({ params }: ResultsPageProps) {
   }
 
   return (
-    <main className="min-h-screen py-12">
-      <div className="max-w-5xl mx-auto space-y-10">
-        <div className="border rounded-3xl p-8 bg-white">
-          <h1 className="text-5xl font-bold">Monthly Savings</h1>
+    <main className="min-h-screen py-20 px-6">
+      <div className="max-w-6xl mx-auto space-y-10">
+        <div className="glass-card rounded-[2rem] p-10">
+          <div className="space-y-4">
+            <div className="inline-flex items-center rounded-full bg-green-100 px-4 py-2 text-sm font-medium text-green-700">
+              Optimization Opportunity Detected
+            </div>
 
-          <p className="text-6xl font-bold mt-4">
-            ${audit.result.totalMonthlySavings.toFixed(0)}
-          </p>
+            <h1 className="text-6xl font-bold gradient-text">
+              Monthly Savings
+            </h1>
 
-          <p className="text-muted-foreground mt-2">
-            Estimated monthly optimization opportunity
-          </p>
+            <p className="text-7xl font-bold">
+              ${audit.result.totalMonthlySavings.toFixed(0)}
+            </p>
+
+            <p className="text-gray-600 text-lg">
+              Estimated monthly optimization opportunity
+            </p>
+          </div>
         </div>
 
-        <div className="border rounded-2xl p-6 bg-white">
-          <h2 className="text-2xl font-semibold mb-4">AI Summary</h2>
+        <div className="glass-card rounded-3xl p-8">
+          <h2 className="text-3xl font-bold mb-4">AI Summary</h2>
 
-          <p className="text-muted-foreground leading-7">{audit.ai_summary}</p>
+          <p className="text-gray-700 leading-8 text-lg">{audit.ai_summary}</p>
         </div>
 
         <LeadForm
@@ -53,31 +61,57 @@ export default async function ResultsPage({ params }: ResultsPageProps) {
           savings={audit.result.totalMonthlySavings}
         />
 
-        <div className="grid gap-6">
-          {audit.result.recommendations.map((rec: any, index: number) => (
-            <div key={index} className="border rounded-2xl p-6 bg-white">
-              <div className="flex justify-between items-start">
-                <div className="space-y-2">
-                  <h2 className="text-2xl font-semibold">{rec.tool}</h2>
+        {audit.result.recommendations.length === 0 ? (
+          <div className="glass-card rounded-3xl p-10 text-center">
+            <h2 className="text-3xl font-bold">Great Setup</h2>
 
-                  <p>Current Plan: {rec.currentPlan}</p>
+            <p className="mt-4 text-gray-600">
+              Your current AI tooling stack already appears highly optimized.
+            </p>
+          </div>
+        ) : (
+          <div className="grid gap-6">
+            {audit.result.recommendations.map((rec: any, index: number) => (
+              <div key={index} className="glass-card rounded-3xl p-8">
+                <div className="flex flex-col gap-6 md:flex-row md:items-start md:justify-between">
+                  <div className="space-y-4">
+                    <div className="space-y-3">
+                      <h2 className="text-3xl font-bold">{rec.tool}</h2>
 
-                  <p>Recommended Plan: {rec.recommendedPlan}</p>
+                      <div className="inline-flex rounded-full bg-indigo-100 px-3 py-1 text-xs font-medium text-indigo-700">
+                        Optimization Recommendation
+                      </div>
+                    </div>
 
-                  <p className="text-muted-foreground">{rec.reason}</p>
-                </div>
+                    <div className="space-y-2 text-lg">
+                      <p>
+                        <span className="font-semibold">Current Plan:</span>{" "}
+                        {rec.currentPlan}
+                      </p>
 
-                <div className="text-right">
-                  <p className="text-3xl font-bold">
-                    ${rec.monthlySavings.toFixed(0)}
-                  </p>
+                      <p>
+                        <span className="font-semibold">Recommended Plan:</span>{" "}
+                        {rec.recommendedPlan}
+                      </p>
+                    </div>
 
-                  <p className="text-muted-foreground">monthly savings</p>
+                    <p className="text-gray-600 leading-7 max-w-2xl">
+                      {rec.reason}
+                    </p>
+                  </div>
+
+                  <div className="text-left md:text-right">
+                    <p className="text-5xl font-bold">
+                      ${rec.monthlySavings.toFixed(0)}
+                    </p>
+
+                    <p className="mt-2 text-gray-600">monthly savings</p>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
       </div>
     </main>
   );
