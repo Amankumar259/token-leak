@@ -116,23 +116,30 @@ export default function AuditPage() {
   };
 
   return (
-    <main className="min-h-screen py-12">
-      <div className="max-w-3xl mx-auto space-y-8">
-        <div className="space-y-2">
-          <h1 className="text-4xl font-bold">AI Spend Audit</h1>
+    <main className="min-h-screen py-20 px-6">
+      <div className="max-w-4xl mx-auto space-y-10">
+        <div className="text-center space-y-4">
+          <div className="inline-flex items-center rounded-full border border-indigo-200 bg-indigo-50 px-4 py-2 text-sm font-medium text-indigo-700">
+            AI Infrastructure Optimization
+          </div>
 
-          <p className="text-muted-foreground">
-            Analyze and optimize your AI tool spending.
+          <h1 className="text-6xl font-bold tracking-tight gradient-text">
+            Audit Your AI Spend
+          </h1>
+
+          <p className="text-xl text-gray-600 max-w-2xl mx-auto leading-8">
+            Identify wasted AI tooling costs, optimize subscriptions, and
+            generate actionable savings recommendations for your team.
           </p>
         </div>
 
-        <div className="border rounded-2xl p-6 space-y-6 bg-white">
+        <div className="glass-card rounded-3xl p-8 space-y-6">
           <div>
             <label className="block mb-2 font-medium">Team Size</label>
 
             <input
               type="number"
-              className="w-full border rounded-lg p-2"
+              className="w-full rounded-xl border border-gray-200 bg-white/70 p-4 outline-none focus:ring-2 focus:ring-indigo-500"
               value={formData.teamSize}
               onChange={(e) =>
                 setFormData({
@@ -148,7 +155,7 @@ export default function AuditPage() {
             <label className="block mb-2 font-medium">Primary Use Case</label>
 
             <select
-              className="w-full border rounded-lg p-2"
+              className="w-full rounded-xl border border-gray-200 bg-white/70 p-4 outline-none focus:ring-2 focus:ring-indigo-500"
               value={formData.useCase}
               onChange={(e) =>
                 setFormData({
@@ -184,15 +191,15 @@ export default function AuditPage() {
 
         <button
           onClick={addTool}
-          className="border px-6 py-3 rounded-xl bg-white"
+          className="w-full rounded-2xl border border-dashed border-gray-300 bg-white/60 py-4 text-lg font-medium hover:bg-white transition"
         >
-          Add Tool
+          + Add Another Tool
         </button>
 
         <button
           onClick={generateAudit}
           disabled={loading}
-          className="w-full bg-black text-white py-4 rounded-xl font-semibold disabled:opacity-50"
+          className="primary-button w-full rounded-2xl bg-black py-5 text-lg font-semibold text-white disabled:opacity-50"
         >
           {loading ? "Generating Audit..." : "Generate Audit"}
         </button>
