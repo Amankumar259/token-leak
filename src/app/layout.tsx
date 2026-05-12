@@ -3,11 +3,33 @@ import "./globals.css";
 
 import { Navbar } from "@/components/navbar";
 
-export const metadata: Metadata = {
-  title: "SpendPilot",
-  description: "AI Spend Audit Tool",
-  icons: {
-    icon: "/favicon.ico",
+export const metadata = {
+  title: "SpendPilot — AI Spend Optimization",
+
+  description:
+    "Audit and optimize your AI tooling costs with intelligent recommendations.",
+
+  keywords: [
+    "AI cost optimization",
+    "AI audit",
+    "OpenAI",
+    "Claude",
+    "Gemini",
+    "Cursor",
+    "SaaS",
+  ],
+
+  openGraph: {
+    title: "SpendPilot — AI Spend Optimization",
+
+    description:
+      "Reduce AI tooling costs with automated infrastructure audits.",
+
+    url: "https://your-vercel-url.vercel.app",
+
+    siteName: "SpendPilot",
+
+    type: "website",
   },
 };
 
