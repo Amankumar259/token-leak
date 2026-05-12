@@ -2,6 +2,12 @@ import { resend } from "./resend";
 
 export async function sendAuditEmail(email: string, savings: number) {
   try {
+    if (!resend) {
+      console.warn("Resend not configured.");
+
+      return;
+    }
+
     await resend.emails.send({
       from: "onboarding@resend.dev",
 
@@ -24,7 +30,7 @@ export async function sendAuditEmail(email: string, savings: number) {
           </p>
 
           <p>
-            Thanks for trying TokenLeak.
+            Thanks for trying SpendPilot.
           </p>
         </div>
       `,
