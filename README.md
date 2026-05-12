@@ -1,36 +1,80 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# SpendPilot
 
-## Getting Started
+AI infrastructure cost optimization platform that audits AI tooling spend and generates actionable savings recommendations.
 
-First, run the development server:
+## Features
+
+- AI tooling audit workflow
+- Recommendation engine
+- Savings calculations
+- AI-generated optimization summaries
+- Persistent audit storage
+- Shareable audit URLs
+- Lead capture workflow
+- Transactional email delivery
+- Responsive SaaS dashboard UI
+
+## Tech Stack
+
+- Next.js 16
+- TypeScript
+- Tailwind CSS
+- Supabase
+- Google Gemini API
+- Resend
+- Zustand
+- Vitest
+- Vercel
+
+## Architecture
+
+### Frontend
+
+- App Router architecture
+- Server Components for audit rendering
+- Client Components for interactive workflows
+- Zustand state management
+
+### Backend
+
+- Next.js API Routes
+- Supabase PostgreSQL storage
+- AI summary generation with Gemini
+- Transactional emails with Resend
+
+### Recommendation Engine
+
+Rule-based optimization system that analyzes:
+
+- subscription plans
+- team size
+- monthly spend
+- usage patterns
+
+and generates optimization recommendations.
+
+## Local Development
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+
+Environment Variables
+
+NEXT_PUBLIC_SUPABASE_URL=your_url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your_key
+SUPABASE_SERVICE_ROLE_KEY=your_role_key
+GEMINI_API_KEY=your_gemini_api_key
+RESEND_API_KEY=your_resend_api_key
+
+Deployment : Production deployment handled through Vercel.
+
+Future Improvements
+
+ML-based recommendation engine
+Rate limiting
+Advanced analytics
+Vendor benchmarking
+SOC2-ready audit logging
+Multi-org support
 ```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
