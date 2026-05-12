@@ -13,6 +13,14 @@ interface ResultsPageProps {
 export default async function ResultsPage({ params }: ResultsPageProps) {
   const { id } = await params;
 
+  if (!supabaseServer) {
+    return (
+      <main className="min-h-screen flex items-center justify-center">
+        <p>Supabase is not configured.</p>
+      </main>
+    );
+  }
+
   const { data: audit } = await supabaseServer
     .from("audits")
     .select("*")

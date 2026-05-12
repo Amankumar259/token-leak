@@ -10,6 +10,15 @@ import { generateSummary } from "@/lib/ai/generateSummary";
 
 export async function POST(request: Request) {
   try {
+    if (!supabaseServer) {
+      return NextResponse.json(
+        {
+          error: "Supabase not configured",
+        },
+        { status: 500 },
+      );
+    }
+
     const body = await request.json();
 
     const result = runAudit(body);
@@ -20,9 +29,13 @@ export async function POST(request: Request) {
       .from("audits")
       .insert({
         team_size: body.teamSize,
+
         use_case: body.useCase,
+
         tools: body.tools,
+
         result,
+
         ai_summary: aiSummary,
       })
       .select()

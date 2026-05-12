@@ -12,9 +12,16 @@ interface RouteContext {
 
 export async function GET(request: Request, context: RouteContext) {
   try {
-    const { id } = await context.params;
+    if (!supabaseServer) {
+      return NextResponse.json(
+        {
+          error: "Supabase not configured",
+        },
+        { status: 500 },
+      );
+    }
 
-    console.log(`[API] Fetching audit with id: ${id}`);
+    const { id } = await context.params;
 
     const { data, error } = await supabaseServer
       .from("audits")
@@ -23,37 +30,18 @@ export async function GET(request: Request, context: RouteContext) {
       .single();
 
     if (error) {
-      console.error("[API] Supabase error:", error);
-      return NextResponse.json(
-        {
-          error: "Database error",
-          details: error.message,
-        },
-        { status: 500 },
-      );
+      throw error;
     }
 
-    if (!data) {
-      console.warn(`[API] No audit found for id: ${id}`);
-      return NextResponse.json(
-        {
-          error: "Audit not found",
-        },
-        { status: 404 },
-      );
-    }
-
-    console.log(`[API] Found audit:`, JSON.stringify(data, null, 2));
     return NextResponse.json(data);
   } catch (error) {
-    console.error("[API] Error in GET /api/audits/[id]:", error);
+    console.error(error);
 
     return NextResponse.json(
       {
-        error: "Internal server error",
-        message: error instanceof Error ? error.message : "Unknown error",
+        error: "Audit not found",
       },
-      { status: 500 },
+      { status: 404 },
     );
   }
 }
